@@ -7,11 +7,15 @@ async function fetchRickAndMortyData() {
       }
   
       const data = await response.json();
-      //console.log("Recibiendo datos:", data.results);
-
-      const aliveCharacters = data.results.filter(character => character.status === "Alive");
-      
-      console.log("Personajes con Alive:", aliveCharacters);
+  
+      const aliveCharacters = data.results
+        .filter(character => character.status === "Alive") 
+        .map(character => ({
+          ...character,
+          name: character.name.replace(/ /g, "_"), 
+        }));
+  
+      console.log("Personajes que tienen Alive con nombres modificados:", aliveCharacters);
     } catch (error) {
       console.error("Error:", error.message);
     }
